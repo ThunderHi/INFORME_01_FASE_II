@@ -34,6 +34,10 @@ public:
 
     string getProfesor() const { return profesor; }
     void setProfesor(string profesor) { this->profesor = profesor; }
+
+    void mostrarDetalles() const {
+    cout<<"Nombre del curso: "<<nombre<<endl<<"Codigo del curso: "<<codigo<<endl<<"Profesor del curso: "<<profesor<<endl;
+    }
 };
 
 class Alumno {
@@ -75,33 +79,37 @@ public:
         }
     }
 
-    Matricula& matricularAlumno(Alumno* alumno) {  //Autoreferencia
+    //Autoreferencia
+    Matricula& matricularAlumno(Alumno* alumno) {  
         alumnos.push_back(alumno);
         return *this;
     }
 
+    //Muestra de matriculados
     void mostrarMatriculados() {
-        cout << "Curso: " << curso->getNombre() << endl;
-        cout << "Alumnos inscritos:" << endl;
+        cout<<"Curso: "<<curso->getNombre() << endl;
+        cout<<"Alumnos inscritos:" << endl;
         for (auto& alumno : alumnos) {
-            cout << "Nombre: " << alumno->getNombre() << " / Codigo: " << alumno->getCodigoAlum() << endl;
+            cout<<"Nombre: "<<alumno->getNombre()<<" / Codigo: "<<alumno->getCodigoAlum()<<endl;
         }
     }
 };
 
 int main() {
     //Creación de curso 1
-    Curso curso1("Calculo", "01", "Ing. Pedro");
-    Matricula matricula1(&curso1);
+    Curso curso1("Calculo", "01", "Ing. Pedro");  
+    curso1.mostrarDetalles();
+    Matricula matricula1(&curso1);      //Creación de Matrícula1
     
     //Creación de curso 2
-    Curso curso2("Fisica","02");
-    Matricula matricula2(&curso2);
+    Curso curso2("Fisica","02");               
+    curso2.mostrarDetalles();
+    Matricula matricula2(&curso2);      //Creación de Matrícula2
 
     //Creación de alumnado
-    Alumno* alumno1 = new Alumno("Juan", 2021);
-    Alumno* alumno2 = new Alumno("Maria",1515);
-    Alumno* alumno3 = new Alumno("Carlos",2526);
+    Alumno* alumno1 = new Alumno("Juan", 2021); 
+    Alumno* alumno2 = new Alumno("Maria",1515); 
+    Alumno* alumno3 = new Alumno("Carlos",2526);   
     
     //Encadenamiento para registrar varios alumnos en un solo curso
     matricula1.matricularAlumno(alumno1).matricularAlumno(alumno2).matricularAlumno(alumno3);
