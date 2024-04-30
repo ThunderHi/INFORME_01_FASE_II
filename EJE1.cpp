@@ -1,5 +1,4 @@
 #include <iostream>
-#include <vector>
 #include <string>
 using namespace std;
 
@@ -55,8 +54,8 @@ public:
          this->nombre = nombre; 
     }
 
-    int getId() const { return codigo; }
-    void setId(int id) { 
+    int getCodigoAlum() const { return codigo; }
+    void setCodigoAlum(int codigo) { 
         this->codigo = codigo; 
     }
 };
@@ -86,5 +85,7 @@ int main() {
     Curso curso1("Calculo","01","Ing. Pedro");
     Alumno alumno1("Juan", 12345);
     Matricula matricula1(&curso1, &alumno1);
+    cout << "Curso: " << matricula1.getCurso()->getNombre() << endl;
+    cout << "Alumno inscrito: " << matricula1.getAlumno()->getNombre()<<" Codigo: " <<matricula1.getAlumno()->getCodigoAlum()<< endl;
     return 0;
 }
