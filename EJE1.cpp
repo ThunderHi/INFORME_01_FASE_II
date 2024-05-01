@@ -96,27 +96,93 @@ public:
 };
 
 int main() {
-    //Creación de curso 1
-    Curso curso1("Calculo", "01", "Ing. Pedro");  
-    curso1.mostrarDetalles();
-    Matricula matricula1(&curso1);      //Creación de Matrícula1
-    
-    //Creación de curso 2
-    Curso curso2("Fisica","02");               
-    curso2.mostrarDetalles();
-    Matricula matricula2(&curso2);      //Creación de Matrícula2
+    int opcion;
+    vector<Curso*> cursos;
+    vector<Matricula*> matriculas;
+    vector<Alumno*> alumnos;
 
-    //Creación de alumnado
-    Alumno* alumno1 = new Alumno("Juan", 2021); 
-    Alumno* alumno2 = new Alumno("Maria",1515); 
-    Alumno* alumno3 = new Alumno("Carlos",2526);   
-    
-    //Encadenamiento para registrar varios alumnos en un solo curso
-    matricula1.matricularAlumno(alumno1).matricularAlumno(alumno2).matricularAlumno(alumno3);
-    matricula1.mostrarMatriculados();
+    do {
+        cout << "Menu de Opciones" << endl;        //menu de opciones
+        cout << "1. Crear curso" << endl;
+        cout << "2. Ver detalles de cursos" << endl;
+        cout << "3. Crear Alumno" << endl;
+        cout << "4. Ver detalles de Alumnos" << endl;
+        cout << "5. Generar matricula" << endl;
+        cout << "6. Ver detalles de matriculas" << endl;
+        cout << "7. Salir" << endl;
+        cout << "Seleccione una opcion: ";
+        cin >> opcion;
 
-    matricula2.matricularAlumno(alumno1).matricularAlumno(alumno2).matricularAlumno(alumno3);
-    matricula2.mostrarMatriculados();
-    
+        switch (opcion) {                //Switch para manejo de opciones
+            case 1: {
+                string nombre, codigo, profesor;
+                cout << "Ingrese el nombre del curso: ";
+                cin >> nombre;
+                cout << "Ingrese el codigo del curso: ";
+                cin >> codigo;
+                cout << "Ingrese el nombre del profesor: ";
+                cin >> profesor;
+                Curso* nuevoCurso = new Curso(nombre, codigo, profesor);
+                cursos.push_back(nuevoCurso);
+                break;
+            }
+            case 2: {
+                cout << "Detalles de los cursos:" << endl;
+                for (auto& curso : cursos) {
+                    curso->mostrarDetalles();
+                }
+                break;
+            }
+            case 3: {
+                string nombre;
+                int codigo;
+                cout << "Ingrese el nombre del alumno: ";
+                cin >> nombre;
+                cout << "Ingrese el codigo del alumno: ";
+                cin >> codigo;
+                Alumno* nuevoAlumno = new Alumno(nombre, codigo);
+                alumnos.push_back(nuevoAlumno);
+                break;
+            }
+            case 4: {
+                cout << "Detalles de los alumnos:" << endl;
+                for (auto& alumno : alumnos) {
+                    cout << "Nombre: " << alumno->getNombre() << " / Codigo: " << alumno->getCodigoAlum() << endl;
+                }
+                break;
+            }
+            case 5: {
+                int indiceCurso, indiceAlumno;
+                cout << "Seleccione el curso al que desea matricular: " << endl;
+                for (int i = 0; i < cursos.size(); ++i) {
+                    cout << i + 1 << ". " << cursos[i]->getNombre() << endl;
+                }
+                cout << "Ingrese el numero del curso: ";
+                cin >> indiceCurso;
+                cout << "Seleccione el alumno que desea matricular: " << endl;
+                for (int i = 0; i < alumnos.size(); ++i) {
+                    cout << i + 1 << ". " << alumnos[i]->getNombre() << endl;
+                }
+                cout << "Ingrese el numero del alumno: ";
+                cin >> indiceAlumno;
+                Matricula* nuevaMatricula = new Matricula(cursos[indiceCurso - 1]);
+                nuevaMatricula->matricularAlumno(alumnos[indiceAlumno - 1]);
+                matriculas.push_back(nuevaMatricula);
+                break;
+            }
+            case 6: {
+                cout << "Detalles de las matriculas:" << endl;
+                for (auto& matricula : matriculas) {
+                    matricula->mostrarMatriculados();
+                }
+                break;
+            }
+            case 7:
+                cout << "Saliendo..." << endl;
+                break;
+            default:
+                cout << "Opcion invalida. Por favor, seleccione una opcion valida." << endl;
+        }
+    } while (opcion != 7);
     return 0;
 }
